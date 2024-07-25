@@ -23,7 +23,7 @@ class CompaniesController extends Controller
                     ->get();
 
         } catch (\Exception $th) {
-            return response()->json(['error' => 'Erro ao buscar empresas'], 500);
+            return response()->json(['error' => $th], 500);
         }
     }
 }

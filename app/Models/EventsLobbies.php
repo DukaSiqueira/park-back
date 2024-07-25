@@ -20,4 +20,9 @@ class EventsLobbies extends Model
         'autoList',
         'products'
     ];
+
+    public function event(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Events::class, 'eventId', 'id');
+    }
 }
