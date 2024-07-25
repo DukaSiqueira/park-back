@@ -14,6 +14,7 @@ class EventsController extends Controller
                 ->select('id', 'name')
                 ->where('status', 1)
                 ->where('compId', $compId)
+                ->orderBy('startTime')
                 ->get();
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Erro ao buscar eventos'], 500);
