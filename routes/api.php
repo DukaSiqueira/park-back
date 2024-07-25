@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\EventsLobbiesController;
+use App\Http\Controllers\EventsLobbiesRecordsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('companies', [CompaniesController::class, 'index']);
     Route::get('events/{compId}', [EventsController::class, 'show']);
     Route::get('lobbies/{eventId}', [EventsLobbiesController::class, 'show']);
+    Route::post('lobbies-records', [EventsLobbiesRecordsController::class, 'store']);
 });
