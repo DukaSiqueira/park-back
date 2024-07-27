@@ -26,8 +26,6 @@ class VehicleController extends Controller
         $validatedData = $request->validate([
             'ticket_code' => 'required|exists:tickets_records,code',
             'type' => 'required|in:car,motorcycle',
-            'color' => 'required|string|max:50',
-            'model' => 'required|string|max:100',
             'plate' => 'required|string|max:20|unique:vehicles,plate'
         ]);
 
