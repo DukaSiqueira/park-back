@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Events;
+use App\Models\EventsTicketsRecords;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -20,4 +21,23 @@ class EventsController extends Controller
             return response()->json(['error' => 'Erro ao buscar eventos'], 500);
         }
     }
+
+    public function getValidatedTickets($eventId)
+    {
+        try {
+            return EventsTicketsRecords::query()
+                ->select('tickets_records.id', 'tickets.name as ticketName', 'events_batches.name as batchName',
+                    'users.name as userName', 'tickets_records.code')
+                ->where('tickets_records.status', 1)
+                ->where('tickets_records.eventId', $eventId)
+                ->has('lobbyRecord')
+                ->join('users', 'users.id', '=', 'tickets_records.userId')
+                ->join('tickets', 'tickets.id', '=', 'tickets_records.ticketId')
+                ->join('events_batches', 'events_batches.id', '=', 'tickets_records.batchId')
+                ->get();
+        } catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()], 500);
+        }
+    }
+
 }

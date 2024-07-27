@@ -36,4 +36,9 @@ class EventsTicketsRecords extends Model
         'status',
         'obs'
     ];
+
+    public function lobbyRecord()
+    {
+        return $this->hasOne(eventsLobbiesRecords::class, 'ticketsEventsBuyRecId');
+    }
 }

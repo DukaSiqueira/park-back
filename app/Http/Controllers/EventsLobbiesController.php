@@ -16,17 +16,27 @@ class EventsLobbiesController extends Controller
                 ->where('status', 1)
                 ->where('eventId', $eventId)
                 ->with(['event' => function ($query) {
-                    $query->withCount(['records' => function ($subQuery) {
-                        $subQuery->where('status', 1);
-                    }]);
+                    $query->with([
+                        'records' => function ($subQuery) {
+                            $subQuery->where('status', 1)
+                                ->with('lobbyRecord');
+                        }
+                    ]);
                 }])
                 ->get();
-
 
             foreach ($lobbies as $lobby) {
                 $lobby->validated_record = 0;
                 $lobby->pending_record = 0;
-                if ($lobby->event->records_count > 0) $lobby->total_records = $lobby->event->records_count;
+                $lobby->total_records = 0;
+
+                if ($lobby->event->records->isNotEmpty()) {
+                    $lobby->total_records = $lobby->event->records->count();
+                    $lobby->validated_record = $lobby->event->records->filter(function ($record) {
+                        return $record->lobbyRecord;
+                    })->count();
+                    $lobby->pending_record = $lobby->total_records - $lobby->validated_record;
+                }
             }
 
             return $lobbies;

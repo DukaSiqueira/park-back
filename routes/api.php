@@ -5,6 +5,7 @@ use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\EventsLobbiesController;
 use App\Http\Controllers\EventsLobbiesRecordsController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('events/{compId}', [EventsController::class, 'show']);
     Route::get('lobbies/{eventId}', [EventsLobbiesController::class, 'show']);
     Route::post('lobbies-records', [EventsLobbiesRecordsController::class, 'store']);
+    Route::get('validated-tickets/{eventId}', [EventsController::class, 'getValidatedTickets']);
+    Route::get('/vehicle/{ticket_code}', [VehicleController::class, 'showVehicleByTicketCode']);
+    Route::post('/vehicle', [VehicleController::class, 'store']);
+    Route::delete('/vehicle/{ticket_code}', [VehicleController::class, 'destroy']);
 });
