@@ -39,6 +39,6 @@ class EventsTicketsRecords extends Model
 
     public function lobbyRecord()
     {
-        return $this->hasOne(eventsLobbiesRecords::class, 'ticketsEventsBuyRecId');
+        return $this->hasOne(EventsLobbiesRecords::class, 'ticketsEventsBuyRecId');
     }
 }
