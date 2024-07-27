@@ -27,7 +27,7 @@ class EventsController extends Controller
         try {
             return EventsTicketsRecords::query()
                 ->select('tickets_records.id', 'tickets.name as ticketName', 'events_batches.name as batchName',
-                    'users.name as userName', 'tickets_records.code')
+                    'tickets_records.name as userName', 'tickets_records.code')
                 ->where('tickets_records.status', 1)
                 ->where('tickets_records.eventId', $eventId)
                 ->has('lobbyRecord')
