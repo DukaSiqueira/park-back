@@ -41,7 +41,9 @@ class EventsLobbiesController extends Controller
 
             return $lobbies;
         } catch (\Throwable $th) {
-            return response()->json($th);
+
+            return response()->json(['error' => $th->getMessage(),
+                'line', $th->getLine()], 500);
         }
     }
 }
