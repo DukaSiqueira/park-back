@@ -13,6 +13,8 @@ class EventsLobbiesRecordsController extends Controller
     {
         try {
             $ticket = EventsTicketsRecords::query()
+                ->where('compId', $request->compId)
+                ->where('eventId', $request->eventId)
                 ->where('code', $request->code)
                 ->where('status', 1)
                 ->first();
